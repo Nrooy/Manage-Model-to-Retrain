@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Detail</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+</head>
+<body>
+    <h1 style="text-align: center">Xem Chi tiết Model</h1>
+    <div class="row">
+        <div class="col-3">
+
+        </div>
+        <div class="col-6 border border-primary p-3">
+            <div class="formbold-mb-3">
+                <label class="formbold-form-label font-weight-bold">
+                    ID
+                </label>
+                <p th:text="${model.id}" style="font-size: 16px; color: #536387;"></p>
+            </div>
+            <div class="formbold-mb-3">
+                <label class="formbold-form-label font-weight-bold">
+                    Name
+                </label>
+                <p th:text="${model.name}" style="font-size: 16px; color: #536387;"></p>
+            </div>
+            <div class="formbold-mb-3">
+                <label class="formbold-form-label font-weight-bold">
+                    link
+                </label>
+                <p th:text="${model.link}" style="font-size: 16px; color: #536387;"></p>
+            </div>
+            <div class="formbold-mb-3">
+                <label class="formbold-form-label font-weight-bold">
+                    Date Trainning
+                </label>
+                <p th:text="${model.date_trainning}" style="font-size: 16px; color: #536387;"></p>
+            </div>
+            <div class="formbold-mb-3">
+                <label class="formbold-form-label font-weight-bold">
+                    F1
+                </label>
+                <p th:text="${model.f1}" style="font-size: 16px; color: #536387;"></p>
+            </div>
+            <div class="formbold-mb-3">
+                <label class="formbold-form-label font-weight-bold">
+                    Acc
+                </label>
+                <p th:text="${model.acc}" style="font-size: 16px; color: #536387;"></p>
+            </div>
+            <div class="formbold-mb-3">
+                <label class="formbold-form-label font-weight-bold">
+                    Pre
+                </label>
+                <p th:text="${model.pre}" style="font-size: 16px; color: #536387;"></p>
+            </div>
+            <div class="formbold-mb-3">
+                <label class="formbold-form-label font-weight-bold">
+                    Recall
+                </label>
+                <p th:text="${model.re}" style="font-size: 16px; color: #536387;"></p>
+            </div>
+            <div class="formbold-mb-3">
+                <label class="formbold-form-label font-weight-bold">
+                    isDefault
+                </label>
+                <p th:text="${model.isDafault()}" style="font-size: 16px; color: #536387;"></p>
+            </div>
+
+            <a th:href="@{/model/get-all}" class="btn-primary"> Trở lại</a>
+        </div>
+
+
+        <div class="col-3"></div>
+    </div>
+</body>
+</html>

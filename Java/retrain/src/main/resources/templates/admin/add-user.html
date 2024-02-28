@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Trang quản trị</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <style>
+    .menu {
+      background-color: #343a40;
+      width: 80%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* justify-content: center; */
+      align-items: center;
+      /* text-align: center; */
+    }
+
+    .menu a {
+      color: white;
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      margin: 10px 0;
+    }
+
+    .menu a:hover {
+      background-color: #212529;
+    }
+
+    .menu a:first-child:before {
+      content: "\f0c9";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      margin-right: 5px;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    form {
+      font-family: 'Inter', sans-serif;
+    }
+    .formbold-mb-3 {
+      margin-bottom: 15px;
+    }
+
+    #supportCheckbox:checked ~ div span {
+      opacity: 1;
+    }
+
+    .formbold-main-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+    }
+
+    .formbold-form-wrapper {
+      margin: 0 auto;
+      max-width: 570px;
+      width: 100%;
+      background: white;
+    }
+
+    .formbold-form-title {
+      margin-bottom: 30px;
+    }
+    .formbold-form-title h2 {
+      font-weight: 600;
+      font-size: 28px;
+      line-height: 34px;
+      color: #07074d;
+    }
+    .formbold-form-title p {
+      font-size: 16px;
+      line-height: 24px;
+      color: #536387;
+      margin-top: 12px;
+    }
+
+    .formbold-input-flex {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .formbold-input-flex > div {
+      width: 50%;
+    }
+    .formbold-form-input {
+      text-align: center;
+      width: 100%;
+      padding: 10px 22px;
+      border-radius: 5px;
+      border: 1px solid #dde3ec;
+      background: #ffffff;
+      font-weight: 500;
+      font-size: 16px;
+      color: #536387;
+      outline: none;
+      resize: none;
+    }
+    .formbold-form-input:focus {
+      border-color: #6a64f1;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+    .formbold-form-label {
+      color: #536387;
+      font-size: 14px;
+      line-height: 24px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .formbold-checkbox-label a {
+      margin-left: 5px;
+      color: #6a64f1;
+    }
+
+    .formbold-btn {
+      font-size: 16px;
+      border-radius: 5px;
+      padding: 10px 25px;
+      border: none;
+      font-weight: 500;
+      background-color: #446084;
+      color: white;
+      cursor: pointer;
+      margin-top: 25px;
+    }
+    .formbold-btn:hover {
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .table-responsive {
+      max-height: 200px; /* Điều chỉnh độ cao tối đa cho việc cuộn */
+      overflow-y: auto;
+    }
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+    }
+
+    #searchInput {
+      width: 200px;
+      padding: 5px;
+      margin-right: 10px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Quản trị dữ liệu</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto"></ul>
+    <span class="navbar-text">
+                Xin chào, <strong th:text="${session.user}"></strong> | <a th:href="@{/logout}">Đăng xuất</a>
+            </span>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="menu">
+        <a href="#" class="active"> Menu</a>
+        <a th:href="@{/view/get-all}"><i class="fas fa-box-open"></i>Quản lý lịch sử xem</a>
+        <a th:href="@{/favor/get-all}"><i class="fas fa-clipboard-list"></i>Quản lý sở thích - nhãn</a>
+        <a th:href="@{/user/get-all}"><i class="fas fa-users active"></i>Quản lý người dùng</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="formbold-main-wrapper">
+        <!-- Author: FormBold Team -->
+        <!-- Learn More: https://formbold.com -->
+        <div class="formbold-form-wrapper">
+          <form method="POST" th:action="@{/user/add}">
+            <div class="formbold-form-title">
+              <h2 class="">Thêm mới người dùng</h2>
+            </div>
+            <div class="formbold-mb-3">
+              <label for="code" class="formbold-form-label">
+                Mã người dùng
+              </label>
+              <input
+                      type="text"
+                      name="code"
+                      id="code"
+                      class="formbold-form-input"
+              />
+            </div>
+            <div class="formbold-mb-3">
+              <label for="firstname" class="formbold-form-label">
+                Tên người dùng
+              </label>
+              <input
+                      type="text"
+                      name="userName"
+                      id="firstname"
+                      class="formbold-form-input"
+              />
+            </div>
+            <div class="formbold-mb-3">
+              <label for="address" class="formbold-form-label">
+                Email
+              </label>
+              <input
+                      type="text"
+                      name="email"
+                      id="address"
+                      class="formbold-form-input"
+              />
+            </div>
+            <div class="formbold-input-flex">
+              <div>
+                <label for="role" class="formbold-form-label">
+                  Role
+                </label>
+                <input
+                        type="text"
+                        name="role"
+                        id="role"
+                        class="formbold-form-input"
+                />
+              </div>
+              <div>
+                <label for="lastname" class="formbold-form-label"> Mật khẩu </label>
+                <input
+                        type="text"
+                        name="password"
+                        id="lastname"
+                        class="formbold-form-input"
+                />
+              </div>
+              <div>
+                <label for="gender" class="formbold-form-label">
+                  Giới tính
+                </label>
+                <input
+                        type="text"
+                        name="gender"
+                        id="gender"
+                        class="formbold-form-input"
+                />
+              </div>
+              <div>
+                <label for="age" class="formbold-form-label">
+                  Tuổi
+                </label>
+                <input
+                        type="text"
+                        name="age"
+                        id="age"
+                        class="formbold-form-input"
+                />
+              </div>
+            </div>
+            <input type="text" id="searchInput" placeholder="Tìm kiếm...">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Sở thích(theo danh mục)</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="favor : ${listF}">
+                  <td th:text="${favor.getId()}"></td>
+                  <td th:text="${favor.getName()}"></td>
+                  <td>
+                    <input type="checkbox" name="favors" th:value="${favor.getId()}"/>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <script>
+              document.getElementById("searchInput").addEventListener("keyup", function() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("searchInput");
+                filter = input.value.toUpperCase();
+                table = document.querySelector("table");
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                  td = tr[i].getElementsByTagName("td")[1]; // 0 là cột bạn muốn tìm kiếm
+                  if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                      tr[i].style.display = "";
+                    } else {
+                      tr[i].style.display = "none";
+                    }
+                  }
+                }
+              });
+            </script>
+            <button class="formbold-btn">Thêm mới</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+
+</html>

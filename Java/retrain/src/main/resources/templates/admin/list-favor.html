@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Trang quản trị</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <style>
+    .menu {
+      background-color: #343a40;
+      width: 80%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* justify-content: center; */
+      align-items: center;
+      /* text-align: center; */
+    }
+
+    .menu a {
+      color: white;
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      margin: 10px 0;
+    }
+
+    .menu a:hover {
+      background-color: #212529;
+    }
+
+    .menu a:first-child:before {
+      content: "\f0c9";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      margin-right: 5px;
+    }
+
+    .centered {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .search-container {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      float: left;
+    }
+
+    input[type="text"] {
+      width: 200px;
+      padding: 5px;
+      margin-right: 10px;
+      border: 1px solid #333;
+      border-radius: 5px;
+    }
+
+    .btn-search {
+      background-color: #007BFF;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Quản trị dữ liệu</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto"></ul>
+    <span class="navbar-text">
+                Xin chào, <strong th:text="${session.user}"></strong> | <a th:href="@{/logout}">Đăng xuất</a>
+    </span>
+  </div>
+</nav>
+
+<div class="container-fluid" style="margin-top: 20px;">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="menu">
+        <a href="#" > Menu</a>
+        <a th:href="@{/view/get-all}"><i class="fas fa-box-open"></i>Quản lý lịch sử xem</a>
+        <a th:href="@{/favor/get-all}"><i class="fas fa-clipboard-list"></i>Quản lý sở thích - nhãn</a>
+        <a th:href="@{/user/get-all}"><i class="fas fa-users active"></i>Quản lý người dùng</a>
+        <a th:href="@{/model/get-all}"><i class="fas fa-users active"></i>Quản lý Model</a>
+
+      </div>
+    </div>
+    <div class="col-md-9">
+      <h2>Danh sách nhãn - sở thích</h2>
+      <form method="get" th:action="@{/favor/search}" class="search-container">
+        <input type="text" id="searchInput" placeholder="Tìm..." name = "keyword">
+        <button type="submit" class="btn-search">Tìm kiếm</button>
+      </form>
+      </br>
+      <div class="centered">
+        <a th:href="@{/favor/get-create-form}" class="btn btn-primary btn-sm">Thêm mới sở thích</a>
+      </div>
+      </br>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Sở thích(theo danh mục)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="favor : ${listF}">
+            <td th:text="${favor.getId()}"></td>
+            <td th:text="${favor.getName()}"></td>
+            <td>
+              <a th:href="@{'/favor/' + ${favor.id}}" class="btn btn-primary btn-sm">Sửa</a>
+              <a th:href="@{'/favor/delete/' + ${favor.id}}" class="btn btn-danger btn-sm">Xóa</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" th:if="${currentPage > 1}">
+            <a class="page-link" th:href="@{'?pageNo=' + ${currentPage - 1}}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item" th:each="i: ${#numbers.sequence(1,4)}"
+              th:classappend="${currentPage == i ? 'active': ''}"><a class="page-link" th:href="@{'?pageNo=' + ${i}}"
+                                                                     th:text="${i}">1</a></li>
+          <li class="page-item" th:if="${currentPage < totalPage}">
+            <a class="page-link" th:href="@{'?pageNo=' + ${currentPage + 1}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+</div>
+</body>
+
+</html>
